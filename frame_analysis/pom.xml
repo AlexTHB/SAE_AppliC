@@ -29,7 +29,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -46,18 +45,12 @@
 			<artifactId>spring-batch-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		 <dependency>
-			<groupId>org.pcap4j</groupId>
-			<artifactId>pcap4j-core</artifactId>
-			<version>1.8.2</version>
-		</dependency>
 		<dependency>
 			<groupId>org.pcap4j</groupId>
-			<artifactId>pcap4j-packetfactory-static</artifactId>
-			<version>1.8.2</version>
+			<artifactId>pcap4j-core</artifactId>
+			<version>2.0.0-alpha.6</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -66,5 +59,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
