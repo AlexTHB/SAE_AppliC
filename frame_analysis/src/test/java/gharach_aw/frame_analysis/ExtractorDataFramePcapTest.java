@@ -2,7 +2,7 @@ package gharach_aw.frame_analysis;
 
 import java.util.List;
 
-import ExtractorData.ExtractorDataFramePcap;
+import gharach_aw.frame_analysis.ExtractorData.ExtractorDataFramePcap;
 
 public class ExtractorDataFramePcapTest {
     public ExtractorDataFramePcapTest () {
