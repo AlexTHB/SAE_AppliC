@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch)",
+            "request": "launch",
+            "mainClass": "gharach_aw.frame_analysis.ExtractorDataFramePcapTest",
+            "args": [],
+            "projectName": "frame_analysis",
+            "vmArgs": [
+                "--enable-preview",
+                "--enable-native-access=ALL-UNNAMED"     
+            ],
+            "stopOnEntry": false,
+            "cwd": "${workspaceFolder}",
+            "sourcePaths": [
+                "${workspaceFolder}"
+            ]
+        }
+    ]
+}
