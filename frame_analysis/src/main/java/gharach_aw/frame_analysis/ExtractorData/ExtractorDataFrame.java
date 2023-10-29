@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExtractorDataFrame<T> {
-    List<List<T>> packetsList;
+    public List<List<T>> packetsList;
 
 
     public ExtractorDataFrame() {
@@ -16,7 +16,7 @@ public class ExtractorDataFrame<T> {
 
     }
 
-    public List<List<T>>  getPackets(String file)  {
+    public List<List<T>> getPackets(String file)  {
         // Your logic to extract packets goes here
         // Return a list of packets of type T
         return packetsList;
