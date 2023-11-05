@@ -1,0 +1,20 @@
+CREATE TABLE `frame` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `PacketNum` int NOT NULL,
+  `DatePacket` datetime NOT NULL,
+  `DstMac` varchar(100) NOT NULL,
+  `SrcMac` varchar(100) NOT NULL,
+  `EtherType` varchar(100) NOT NULL,
+  `SrcIP` varchar(100)  NOT NULL,
+  `DstIP` varchar(100)  NOT NULL,
+  `SrcPort` int NOT NULL,
+  `DstPort` int NOT NULL,
+  `TransportProtocol` varchar(100) DEFAULT NULL,
+  `ApplicationProtocol` varchar(100) DEFAULT NULL,
+  `Size` int NOT NULL,
+  `Info` varchar(200) NOT NULL,
+  `id_capture` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_capture` (`id_capture`),
+  CONSTRAINT `frame_ibfk_1` FOREIGN KEY (`id_capture`) REFERENCES `captures` (`id`)
+) 

@@ -1,11 +1,12 @@
 package gharach_aw.frame_analysis.ExtractorData;
 
+
 import java.sql.Date;
 import java.util.List;
-
 import gharach_aw.frame_analysis.Persistence.Entity.Frame;
 
-public class ExtractorDataFrame {
+
+public class ExtractorDataFrameJSON extends ExtractorDataFrame{
 
     public List<Frame> frameList;
 
@@ -35,61 +36,68 @@ public class ExtractorDataFrame {
 
     private String info;
 
-    public int extractPacketNum(){
+    public int extractPacketNum() {
         return packetNum;
-    };
+    }
 
-    public Date extractDatePacket(){
+    public Date extractDatePacket() {
         return datePacket;
-    };
-    public String extractDstMac(){
+    }
+
+    public String extractDstMac() {
         return dstMac;
-    };
-    public String extractSrcMac(){
+
+    }
+
+    public String extractSrcMac() {
         return srcMac;
 
-    };
-    public String extractEtherType(){
+    }
+
+    public String extractEtherType() {
         return etherType;
-    };
 
-    public int extractSrcIP(){
+    }
+
+    public int extractSrcIP() {
         return srcIP;
-    };
 
-    public int extractDstIP(){
+    }
+
+    public int extractDstIP() {
         return dstIP;
-    };
 
-    public int extractSrcPort(){
+    }
+
+    public int extractSrcPort() {
         return srcPort;
 
-    };
-    public int extractDstPort(){
+    }
+
+    public int extractDstPort() {
         return dstPort;
-    };
+    }
 
-    public String extractTransportProtocol(){
+    public String extractTransportProtocol() {
         return transportProtocol;
-    };
 
-    public String extractApplicationProtocol(){
+    }
+
+    public String extractApplicationProtocol() {
         return applicationProtocol;
-    };
 
-    public int extractSize(){
+    }
+
+    public int extractSize() {
         return size;
-    };
-
-    public String extractInfo(){
-        return info;
-    };
-
-    public List<Frame> extractPackets(){
-        return frameList;
-    };
-} 
+    }
     
+    public String extractInfo() {
+        return info;
+    }
 
-
-
+    public List<Frame> extractPackets(String file) {
+        return frameList;
+    }
+    
+}
