@@ -1,5 +1,9 @@
-package gharach_aw.frame_analysis.Exception;
+package gharach_aw.frame_analysis.exception;
 
-public class InternalServerErrorException {
+public class InternalServerErrorException extends RuntimeException{
+
+    public InternalServerErrorException (String message) {
+        super(message);
+    }  
     
 }

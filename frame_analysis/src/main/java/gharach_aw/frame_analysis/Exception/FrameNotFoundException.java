@@ -1,5 +1,9 @@
-package gharach_aw.frame_analysis.Exception;
+package gharach_aw.frame_analysis.exception;
 
-public class FrameNotFoundException {
+public class FrameNotFoundException extends RuntimeException{
+
+    public FrameNotFoundException (String message) {
+        super(message);
+    }  
     
 }

@@ -1,6 +1,5 @@
-package gharach_aw.frame_analysis.Persistence.Entity;
+package gharach_aw.frame_analysis.persistence.entity;
 
-import java.sql.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,11 +16,11 @@ public class Capture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "nom_fic")
+    @Column(name = "file_name")
     private String fileName;
 
-    @Column(name = "date_de_creation")
-    private Date creationDate;
+    @Column(name = "creation_date")
+    private String fileDate;
 
     // Getters and setters
 
@@ -37,8 +36,12 @@ public class Capture {
         this.fileName = fileName;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public String getFileDate() {
+        return fileDate;
     }    
+    
+    public void setFileDate(String fileDate) {
+        this.fileDate = fileDate;
+    }
 
 }

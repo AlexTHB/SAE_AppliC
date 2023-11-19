@@ -1,5 +1,10 @@
-package gharach_aw.frame_analysis.Exception;
+package gharach_aw.frame_analysis.exception;
 
-public class CaptureNotFoundException {
+public class CaptureNotFoundException extends RuntimeException{
+
+    public CaptureNotFoundException (String message) {
+        super(message);
+    }
     
 }
+    
