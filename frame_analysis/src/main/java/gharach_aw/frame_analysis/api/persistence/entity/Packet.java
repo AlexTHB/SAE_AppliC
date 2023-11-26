@@ -10,7 +10,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-
+/**
+ * The {@code Packet} class represents a network packet and is mapped to the "packet" table in the database.
+ */
 @Entity
 @Table(name = "packet")
 public class Packet {
@@ -170,14 +172,30 @@ public class Packet {
         this.size = size;
     }
     
+    /**
+     * Gets the {@link PacketCapture} to which this packet belongs.
+     *
+     * @return The associated PacketCapture.
+     */
     public PacketCapture getPacketCapture() {
         return packetCapture;
     }
 
+    /**
+     * Sets the {@link PacketCapture} to which this packet belongs.
+     *
+     * @param packetCapture The PacketCapture to associate with this packet.
+     */
     public void setPacketCapture(PacketCapture packetCapture) {
         this.packetCapture = packetCapture;
     }
 
+    
+    /**
+     * Returns a string representation of the packet.
+     *
+     * @return A string representation of the packet.
+     */
     @Override
     public String toString() {
         return "Packet{packetNum=" + packetNum +

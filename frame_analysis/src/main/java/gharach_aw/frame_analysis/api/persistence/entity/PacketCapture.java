@@ -11,7 +11,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-
+/**
+ * The {@code PacketCapture} class represents a collection of network packets captured from a file
+ * and is mapped to the "packet_capture" table in the database.
+ */
 @Entity
 @Table(name = "packet_capture")
 public class PacketCapture {
@@ -26,7 +29,7 @@ public class PacketCapture {
     @Column(name = "fileDate")
     private String fileDate;
 
-    @OneToMany(mappedBy = "packetCapture", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "packetCapture", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Packet> packets;
 
     // Getters and setters
@@ -59,6 +62,11 @@ public class PacketCapture {
         this.packets = packets;
     }
 
+    /**
+     * Returns a string representation of the packet capture.
+     *
+     * @return A string representation of the packet capture.
+     */
     @Override
     public String toString() {
         return "PacketCapture{" +

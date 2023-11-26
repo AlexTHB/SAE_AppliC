@@ -13,7 +13,6 @@ import java.util.regex.Pattern;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -21,8 +20,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import gharach_aw.frame_analysis.api.persistence.entity.Packet;
 
+/**
+ * The {@code PacketProcessingJSON} class is an implementation of the {@link PacketProcessing} interface.
+ * It extracts informations of the JSON Packet Capture and populates {@code Packet} objects with relevant details.
+ * 
+ * This class is annotated with {@link Component} to be automatically detected and registered as a Spring bean.
+ */
+
 @Component
-@ComponentScan(basePackages = "gharach_aw.frame_analysis.api.data_extractor")
 public class PacketProcessingJSON implements PacketProcessing{
 
     private List<Packet> packetsList = new ArrayList<>();
@@ -53,6 +58,13 @@ public class PacketProcessingJSON implements PacketProcessing{
 
     private Packet packet;
 
+    /**
+     * Extracts packets from the specified JSON file and populates a list of Packet objects.
+     *
+     * @param jsonfile The JSON file containing packet data.
+     * @return A List of Packet objects extracted from the JSON file.
+     */
+
     @Override
     public List<Packet> packetsExtract(File jsonfile) {
         try {
@@ -81,6 +93,12 @@ public class PacketProcessingJSON implements PacketProcessing{
         return packetsList;
     }
 
+    /**
+     * Extracts information from the frame layer of the packet and sets relevant fields in the Packet object.
+     *
+     * @param layersNode The JsonNode representing the layers of the packet.
+     * @throws ParseException If there is an error parsing date information.
+     */
     public void frameLayerExtract(JsonNode layersNode) throws ParseException {
         JsonNode frameNode = layersNode.path("frame");
         packetNum = frameNode.path("frame.number").asInt();
@@ -91,7 +109,12 @@ public class PacketProcessingJSON implements PacketProcessing{
         size = frameNode.path("frame.len").asInt();
         packet.setSize(size);
     }
-        
+
+    /**
+     * Extracts information from the Ethernet layer of the packet and sets relevant fields in the Packet object.
+     *
+     * @param layersNode The JsonNode representing the layers of the packet.
+     */ 
     public void ethernetLayerExtract(JsonNode layersNode) {
         JsonNode ethNode = layersNode.path("eth");
         dstMac = ethNode.path("eth.dst").asText();
@@ -102,6 +125,11 @@ public class PacketProcessingJSON implements PacketProcessing{
         packet.setEtherType(etherType);
     }
 
+    /**
+     * Extracts information from the network layer of the packet and sets relevant fields in the Packet object.
+     *
+     * @param layersNode The JsonNode representing the layers of the packet.
+     */
     public void networkLayerExtract(JsonNode layersNode) {
         switch (etherType) {
             case "0x0800":   
@@ -121,6 +149,11 @@ public class PacketProcessingJSON implements PacketProcessing{
         }
     }
 
+    /**
+     * Extracts information from the transport layer of the packet and sets relevant fields in the Packet object.
+     *
+     * @param layersNode The JsonNode representing the layers of the packet.
+     */
     public void transportLayerExtract(JsonNode layersNode) {   
         if (layersNode.has("tcp")) {
             transportProtocol = "tcp";
@@ -143,6 +176,11 @@ public class PacketProcessingJSON implements PacketProcessing{
         }
     }
 
+    /**
+     * Extracts information from the application layer of the packet and sets relevant fields in the Packet object.
+     *
+     * @param layersNode The JsonNode representing the layers of the packet.
+     */
     public void applicationLayerExtract(JsonNode layersNode){
         // Get the size of the fields in the "layersNode"
         int size = layersNode.size();
@@ -167,9 +205,16 @@ public class PacketProcessingJSON implements PacketProcessing{
             case "data":
                 packet.setApplicationProtocol(applicationProtocol);
                 break;
-            }
+        }
     }
 
+    /**
+     * Formats the given date string to the desired format and time zone.
+     *
+     * @param dateString The date string to be formatted.
+     * @return The formatted date string.
+     * @throws ParseException If there is an error parsing date information.
+     */
     public String formatDate(String dateString) throws ParseException {
         String inputFormat = "MMM dd, yyyy HH:mm:ss.SSSSSSSSS zzzz";
         String targetTimeZone = "Europe/Paris"; // CET (Central European Time)

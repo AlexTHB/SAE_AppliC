@@ -6,6 +6,18 @@ import java.util.List;
 
 import gharach_aw.frame_analysis.api.persistence.entity.Packet;
 
+/**
+ * This interface defines a contract for processing packets.
+ * You can create classes implementing this interface to extract packets
+ * from specific file types.
+ */
 public interface PacketProcessing {
-    public List<Packet> packetsExtract(File file);
+
+    /**
+     * Extracts packets from the specified file. 
+     *
+     * @param file The file containing packet data.
+     * @return A List of Packet objects extracted from the file.
+     */
+    List<Packet> packetsExtract(File file);
 }
