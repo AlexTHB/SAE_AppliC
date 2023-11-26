@@ -1,10 +1,10 @@
 package gharach_aw.frame_analysis.api.persistence.data_access;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import gharach_aw.frame_analysis.api.persistence.entity.PacketCapture;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 
@@ -12,7 +12,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class PacketCaptureDAO {
 
-    @PersistenceContext    
+    @Autowired    
     private EntityManager entityManager;
 
     // Create
@@ -23,10 +23,6 @@ public class PacketCaptureDAO {
     // Read
     public PacketCapture findById(int id) {
         return entityManager.find(PacketCapture.class, id);
-    }
-
-    public PacketCapture findByName(String fileName) {
-        return entityManager.find(PacketCapture.class, fileName);
     }
 
     // Update

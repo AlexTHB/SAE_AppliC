@@ -10,8 +10,6 @@ public interface PacketCaptureService {
 
     // Read
     PacketCapture findPacketCaptureById(int id);
-    
-    PacketCapture findPacketCaptureByName(String fileName);
 
     // Update
     void updatePacketCapture(PacketCapture packetCapture);

@@ -18,12 +18,12 @@ import gharach_aw.frame_analysis.api.persistence.entity.Packet;
 import gharach_aw.frame_analysis.api.persistence.entity.PacketCapture;
 
 @Component
-@ComponentScan("gharach_aw.frame_analysis.api.data_extractor")
+@ComponentScan(basePackages = "gharach_aw.frame_analysis.api.data_extractor")
 public class PacketCaptureProcessingImpl implements PacketCaptureProcessing{
 
     private PacketCapture packetCapture;
     private String fileName;
-    private String formattedDate;
+    private String fileDate;
     private List<Packet> packets;
 
     private final PacketProcessing packetProcessing;
@@ -41,10 +41,9 @@ public class PacketCaptureProcessingImpl implements PacketCaptureProcessing{
         try {
             extractFileDate(file);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        packetCapture.setFileDate(formattedDate);
+        packetCapture.setFileDate(fileDate);
         extractPacketsList(file);
         packetCapture.setPackets(packets);
         return packetCapture;
@@ -59,15 +58,17 @@ public class PacketCaptureProcessingImpl implements PacketCaptureProcessing{
     public String extractFileDate(File file) throws IOException{
         Path path = FileSystems.getDefault().getPath(file.getAbsolutePath());
         BasicFileAttributes attributes = Files.readAttributes(path, BasicFileAttributes.class);
-        Date fileDate = new Date(attributes.creationTime().toMillis());
+        Date fileDateBrut = new Date(attributes.creationTime().toMillis());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        formattedDate = dateFormat.format(fileDate);
-        return formattedDate;
+        fileDate = dateFormat.format(fileDateBrut);
+        return fileDate;
     }
 
     public List<Packet> extractPacketsList(File file){
         packets = packetProcessing.packetsExtract(file);
-        System.out.println(packets);
+        for (Packet packet :packets){
+            packet.setPacketCapture(packetCapture);
+        }
         return packets;
     }
 }

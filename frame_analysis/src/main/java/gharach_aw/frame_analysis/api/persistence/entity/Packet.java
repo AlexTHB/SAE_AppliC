@@ -1,5 +1,6 @@
 package gharach_aw.frame_analysis.api.persistence.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -79,8 +80,8 @@ public class Packet {
         return packetDate;
     }
     
-    public void setPacketDate(String dateFrame) {
-        this.packetDate = dateFrame;
+    public void setPacketDate(String packetDate) {
+        this.packetDate = packetDate;
     }
 
     public String getDstMac() {
@@ -168,7 +169,7 @@ public class Packet {
     public void setSize(int size) {
         this.size = size;
     }
-
+    
     public PacketCapture getPacketCapture() {
         return packetCapture;
     }
@@ -176,4 +177,22 @@ public class Packet {
     public void setPacketCapture(PacketCapture packetCapture) {
         this.packetCapture = packetCapture;
     }
+
+    @Override
+    public String toString() {
+        return "Packet{packetNum=" + packetNum +
+            ", packetDate='" + packetDate + '\'' +
+            ", dstMac='" + dstMac + '\'' +
+            ", srcMac='" + srcMac + '\'' +
+            ", etherType='" + etherType + '\'' +
+            ", srcIP='" + srcIP + '\'' +
+            ", dstIP='" + dstIP + '\'' +
+            ", srcPort=" + srcPort +
+            ", dstPort=" + dstPort +
+            ", transportProtocol='" + transportProtocol + '\'' +
+            ", applicationProtocol='" + applicationProtocol + '\'' +
+            ", size=" + size +
+            '}';
+    }
+
 }

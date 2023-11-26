@@ -31,11 +31,6 @@ public class PacketCaptureServiceImpl implements PacketCaptureService {
         return packetCaptureDAO.findById(id);
     }
 
-    @Override
-    public PacketCapture findPacketCaptureByName(String fileName){
-        return packetCaptureDAO.findByName(fileName);
-    }
-
     // Update
     @Override
     public void updatePacketCapture(PacketCapture packetCapture) {

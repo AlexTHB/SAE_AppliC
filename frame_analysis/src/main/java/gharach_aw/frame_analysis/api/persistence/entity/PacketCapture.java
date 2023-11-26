@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "packetCapture")
+@Table(name = "packet_capture")
 public class PacketCapture {
 
     @Id
@@ -26,7 +26,7 @@ public class PacketCapture {
     @Column(name = "fileDate")
     private String fileDate;
 
-    @OneToMany(mappedBy = "packetCapture", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "packetCapture", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Packet> packets;
 
     // Getters and setters
@@ -59,4 +59,12 @@ public class PacketCapture {
         this.packets = packets;
     }
 
+    @Override
+    public String toString() {
+        return "PacketCapture{" +
+                "fileName='" + fileName + '\'' +
+                ", fileDate='" + fileDate + '\'' +
+                ", packets='" + packets + '\'' +
+                '}';
+    }
 }
