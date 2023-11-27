@@ -78,8 +78,8 @@ public class PacketProcessingJSON implements PacketProcessing{
             for (JsonNode element : rootNode) {
                 packet = new Packet();
                 // Access each element and extract information
-                JsonNode sourcNode = element.path("_source");
-                JsonNode layersNode = sourcNode.path("layers");
+                JsonNode sourceNode = element.path("_source");
+                JsonNode layersNode = sourceNode.path("layers");
                 frameLayerExtract(layersNode);
                 ethernetLayerExtract(layersNode);
                 networkLayerExtract(layersNode);
