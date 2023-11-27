@@ -12,7 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
- * The {@code PacketCapture} class represents a collection of network packets captured from a file
+ * The {@code PacketCapture} class represents a collection of network packets captured from Wireshark
  * and is mapped to the "packet_capture" table in the database.
  */
 @Entity
