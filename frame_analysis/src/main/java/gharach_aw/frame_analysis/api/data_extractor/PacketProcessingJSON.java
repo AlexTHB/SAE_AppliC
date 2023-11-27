@@ -202,9 +202,6 @@ public class PacketProcessingJSON implements PacketProcessing{
                     packet.setApplicationProtocol(applicationProtocol);
                 }
                 break;
-            case "data":
-                packet.setApplicationProtocol(applicationProtocol);
-                break;
         }
     }
 
