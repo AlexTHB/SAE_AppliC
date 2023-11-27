@@ -21,7 +21,7 @@ public class PacketCapture {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "fileName")
     private String fileName;
@@ -34,7 +34,7 @@ public class PacketCapture {
 
     // Getters and setters
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -70,7 +70,8 @@ public class PacketCapture {
     @Override
     public String toString() {
         return "PacketCapture{" +
-                "fileName='" + fileName + '\'' +
+                "id=" + id +
+                ", fileName='" + fileName + '\'' +
                 ", fileDate='" + fileDate + '\'' +
                 ", packets='" + packets + '\'' +
                 '}';

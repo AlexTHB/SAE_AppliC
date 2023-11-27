@@ -65,7 +65,7 @@ public class PacketCaptureDAO {
      * @return The retrieved {@link PacketCapture} entity, or null if not found.
      * @throws PacketCaptureNotFoundException If the entity with the specified ID is not found.
      */
-    public PacketCapture findById(int id) {
+    public PacketCapture findById(Long id) {
         PacketCapture packetCapture = entityManager.find(PacketCapture.class, id);
         if (packetCapture == null) {
             throw new PacketCaptureNotFoundException("PacketCapture entity with ID " + id + " not found");
@@ -165,7 +165,7 @@ public class PacketCaptureDAO {
      * 
      * @throws PacketCaptureNotFoundException
      */
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         PacketCapture packetCapture = findById(id);
         if (packetCapture != null) {
             entityManager.remove(packetCapture);

@@ -198,7 +198,8 @@ public class Packet {
      */
     @Override
     public String toString() {
-        return "Packet{packetNum=" + packetNum +
+        return "Packet{id=" + id +
+            ", packetNum='" + packetNum + '\'' +
             ", packetDate='" + packetDate + '\'' +
             ", dstMac='" + dstMac + '\'' +
             ", srcMac='" + srcMac + '\'' +
@@ -210,6 +211,7 @@ public class Packet {
             ", transportProtocol='" + transportProtocol + '\'' +
             ", applicationProtocol='" + applicationProtocol + '\'' +
             ", size=" + size +
+            ", packetCaptureId=" + packetCapture.getId() +
             '}';
     }
 
