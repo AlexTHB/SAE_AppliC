@@ -32,7 +32,7 @@ public class PacketCaptureProcessing{
     private final PacketProcessing packetProcessing;
 
     /**
-     * Constructs a new {@code PacketCaptureProcessingImpl} instance.
+     * Constructs a new {@code PacketCaptureProcessing} instance.
      *
      * @param packetProcessing The {@link PacketProcessing} implementation used for extracting packets.
      */
