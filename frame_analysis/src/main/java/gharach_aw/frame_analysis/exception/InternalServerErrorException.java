@@ -1,4 +1,4 @@
-package gharach_aw.frame_analysis.api.exception;
+package gharach_aw.frame_analysis.exception;
 
 public class InternalServerErrorException extends RuntimeException{
 

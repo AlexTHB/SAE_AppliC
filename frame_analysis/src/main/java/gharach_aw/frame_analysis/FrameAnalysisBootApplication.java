@@ -1,4 +1,4 @@
-package gharach_aw.frame_analysis.api;
+package gharach_aw.frame_analysis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package gharach_aw.frame_analysis.api.data_extractor;
+package gharach_aw.frame_analysis.data_extractor;
 
 
 import java.io.File;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import gharach_aw.frame_analysis.api.persistence.entity.Packet;
+import gharach_aw.frame_analysis.persistence.entity.Packet;
 
 /**
  * The {@code PacketProcessingJSON} class is an implementation of the {@link PacketProcessing} interface.

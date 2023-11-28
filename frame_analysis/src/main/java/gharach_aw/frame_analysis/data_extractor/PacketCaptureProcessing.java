@@ -1,4 +1,4 @@
-package gharach_aw.frame_analysis.api.data_extractor;
+package gharach_aw.frame_analysis.data_extractor;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +13,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import gharach_aw.frame_analysis.api.persistence.entity.Packet;
-import gharach_aw.frame_analysis.api.persistence.entity.PacketCapture;
+import gharach_aw.frame_analysis.persistence.entity.Packet;
+import gharach_aw.frame_analysis.persistence.entity.PacketCapture;
 
 /**
  * It is responsible for processing packet capture files, extracting properties, and creating a {@link PacketCapture} object.

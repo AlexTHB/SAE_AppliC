@@ -1,4 +1,4 @@
-package gharach_aw.frame_analysis.api.persistence.entity;
+package gharach_aw.frame_analysis.persistence.entity;
 
 
 import jakarta.persistence.Column;
@@ -210,7 +210,6 @@ public class Packet {
             ", transportProtocol='" + transportProtocol + '\'' +
             ", applicationProtocol='" + applicationProtocol + '\'' +
             ", size=" + size +
-            ", packetCaptureId=" + packetCapture.getId() +
             '}';
     }
 

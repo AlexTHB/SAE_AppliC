@@ -1,4 +1,4 @@
-package gharach_aw.frame_analysis.api.service;
+package gharach_aw.frame_analysis.service;
 
 import java.util.List;
 
@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import gharach_aw.frame_analysis.api.persistence.data_access.PacketCaptureDAO;
-import gharach_aw.frame_analysis.api.persistence.entity.PacketCapture;
+import gharach_aw.frame_analysis.persistence.data_access.PacketCaptureDAO;
+import gharach_aw.frame_analysis.persistence.data_access.PacketDAO;
+import gharach_aw.frame_analysis.persistence.entity.Packet;
+import gharach_aw.frame_analysis.persistence.entity.PacketCapture;
 
 /**
- * The {@code PacketCaptureService} class provides business logic for handling {@link PacketCapture} entities,
- * utilizing the data access methods defined in the associated {@link PacketCaptureDAO}.
+ * The {@code PacketCaptureService} class provides business logic for handling {@link PacketCapture} entities and 
+ * {@link Packet} entities,
+ * utilizing the data access methods defined in the associated {@link PacketCaptureDAO} and {@link PacketDAO}.
  * 
  * This class is annotated with {@link Service} to indicate that it is a Spring service component.
  */
@@ -21,52 +24,58 @@ public class PacketCaptureServiceImpl implements PacketCaptureService {
 
     private final PacketCaptureDAO packetCaptureDAO;
 
+    private final PacketDAO packetDAO;
+
     @Autowired
-    public PacketCaptureServiceImpl(PacketCaptureDAO packetCaptureDAO) {
+    public PacketCaptureServiceImpl(PacketCaptureDAO packetCaptureDAO, PacketDAO packetDAO) {
         this.packetCaptureDAO = packetCaptureDAO;
+        this.packetDAO = packetDAO;
     }
 
     @Override
-    @Transactional
     public void save(PacketCapture packetCapture) {
         packetCaptureDAO.save(packetCapture);
     }
 
    
     @Override
-    @Transactional(readOnly = true)
     public List<PacketCapture> findAllPacketCaptures() {
         return packetCaptureDAO.findAllPacketCaptures();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public PacketCapture findById(Long id) {
         return packetCaptureDAO.findById(id);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public PacketCapture findByFileName(String fileName) {
         return packetCaptureDAO.findByFileName(fileName);
     }
 
     @Override
-    @Transactional
-    public PacketCapture updateEntity(PacketCapture updatedEntity) {
-        return packetCaptureDAO.updateEntity(updatedEntity);
+    public PacketCapture updatePacketCapture(PacketCapture updatedPacketCapture) {
+        return packetCaptureDAO.updatePacketCapture(updatedPacketCapture);
     }
 
     @Override
-    @Transactional
-    public String updatePacketCaptureName(String ancientName, String newName) {
-        return packetCaptureDAO.updatePacketCaptureName(ancientName, newName);
+    public void updatePacketCaptureName(String ancientName, String newName) {
+        packetCaptureDAO.updatePacketCaptureName(ancientName, newName);
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         packetCaptureDAO.deleteById(id);
+    }
+
+    @Override
+    public List<Packet> findAllPacketsByCaptureId(Long captureId) {
+        return packetDAO.findAllPacketsByCaptureId(captureId);
+    }
+
+    @Override
+    public List<Packet> findAllPacketsByCaptureName(String captureName) {
+        return packetDAO.findAllPacketsByCaptureName(captureName);
     }
 }
 

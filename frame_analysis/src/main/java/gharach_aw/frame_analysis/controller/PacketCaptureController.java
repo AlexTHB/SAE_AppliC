@@ -1,4 +1,4 @@
-package gharach_aw.frame_analysis.api.controller;
+package gharach_aw.frame_analysis.controller;
 
 public class PacketCaptureController {
     

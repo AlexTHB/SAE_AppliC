@@ -1,9 +1,10 @@
-package gharach_aw.frame_analysis.api.service;
+package gharach_aw.frame_analysis.service;
 
-
-import gharach_aw.frame_analysis.api.persistence.entity.PacketCapture;
 
 import java.util.List;
+
+import gharach_aw.frame_analysis.persistence.entity.Packet;
+import gharach_aw.frame_analysis.persistence.entity.PacketCapture;
 
 public interface PacketCaptureService {
 
@@ -15,9 +16,13 @@ public interface PacketCaptureService {
 
     PacketCapture findByFileName(String fileName);
 
-    PacketCapture updateEntity(PacketCapture updatedEntity);
+    PacketCapture updatePacketCapture(PacketCapture updatedPacketCapture);
 
-    String updatePacketCaptureName(String ancientName, String newName);
+    void updatePacketCaptureName(String ancientName, String newName);
 
     void deleteById(Long id);
+
+    List<Packet> findAllPacketsByCaptureId(Long captureId);
+
+    List<Packet> findAllPacketsByCaptureName(String captureName);
 }

@@ -1,4 +1,4 @@
-package gharach_aw.frame_analysis.api.persistence.entity;
+package gharach_aw.frame_analysis.persistence.entity;
 
 import java.util.List;
 
@@ -74,7 +74,6 @@ public class PacketCapture {
                 "id=" + id +
                 ", fileName='" + fileName + '\'' +
                 ", fileDate='" + fileDate + '\'' +
-                ", packets='" + packets + '\'' +
                 '}';
     }
 }

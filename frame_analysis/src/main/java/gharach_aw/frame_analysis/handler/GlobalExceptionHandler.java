@@ -1,4 +1,4 @@
-package gharach_aw.frame_analysis.api.handler;
+package gharach_aw.frame_analysis.handler;
 
 public class GlobalExceptionHandler {
 

@@ -1,11 +1,11 @@
-package gharach_aw.frame_analysis.api.persistence.data_access;
+package gharach_aw.frame_analysis.persistence.data_access;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import gharach_aw.frame_analysis.api.exception.PacketCaptureNotFoundException;
-import gharach_aw.frame_analysis.api.persistence.entity.PacketCapture;
+import gharach_aw.frame_analysis.exception.PacketCaptureNotFoundException;
+import gharach_aw.frame_analysis.persistence.entity.PacketCapture;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
@@ -112,7 +112,7 @@ public class PacketCaptureDAO {
      *                                 cannot be created as a new entity.
      * @throws PersistenceException If any other error occurs during the merge operation.
      */
-    public PacketCapture updateEntity(PacketCapture updatedEntity) {
+    public PacketCapture updatePacketCapture(PacketCapture updatedEntity) {
         return entityManager.merge(updatedEntity);
     }
   
@@ -128,7 +128,7 @@ public class PacketCaptureDAO {
      * @throws IllegalArgumentException If ancientName or newName is null.
      * @throws PacketCaptureNotFoundException  If no PacketCapture entity with the specified ancientName is found.
      */
-    public String updatePacketCaptureName(String ancientName, String newName) {
+    public void updatePacketCaptureName(String ancientName, String newName) {
         // Update the file name with JPQL
         String updateQuery = "UPDATE PacketCapture pc SET pc.fileName = :newName WHERE pc.fileName = :ancientName";
 
@@ -142,20 +142,6 @@ public class PacketCaptureDAO {
         if (rowsAffected == 0) {
             throw new PacketCaptureNotFoundException("No PacketCapture entity found with the specified ancientName: " + ancientName);
         }
-
-        // Fetch the updated entity's name
-        String updatedNameQuery = "SELECT pc.fileName FROM PacketCapture pc WHERE pc.fileName = :newName";
-        TypedQuery<String> updatedNameTypedQuery = entityManager.createQuery(updatedNameQuery, String.class);
-        updatedNameTypedQuery.setParameter("newName", newName);
-        List<String> updatedNames = updatedNameTypedQuery.getResultList();
-
-        // Check if any updated names were found
-        if (updatedNames.isEmpty()) {
-            throw new PacketCaptureNotFoundException("Unable to fetch the updated name for ancientName: " + ancientName);
-        }
-
-        // Return the first updated name (assuming unique names)
-        return updatedNames.get(0);
     }
 
     /**

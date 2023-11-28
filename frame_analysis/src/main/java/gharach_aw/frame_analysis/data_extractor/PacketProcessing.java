@@ -1,10 +1,9 @@
-package gharach_aw.frame_analysis.api.data_extractor;
+package gharach_aw.frame_analysis.data_extractor;
 
 import java.io.File;
 import java.util.List;
 
-
-import gharach_aw.frame_analysis.api.persistence.entity.Packet;
+import gharach_aw.frame_analysis.persistence.entity.Packet;
 
 /**
  * This interface defines a contract for processing packets.

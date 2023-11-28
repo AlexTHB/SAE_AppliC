@@ -1,10 +1,10 @@
-package gharach_aw.frame_analysis.api.persistence.data_access;
+package gharach_aw.frame_analysis.persistence.data_access;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import gharach_aw.frame_analysis.api.persistence.entity.Packet;
+import gharach_aw.frame_analysis.persistence.entity.Packet;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
