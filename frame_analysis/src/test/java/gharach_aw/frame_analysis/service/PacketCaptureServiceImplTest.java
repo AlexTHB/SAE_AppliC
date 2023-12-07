@@ -43,7 +43,7 @@ public class PacketCaptureServiceImplTest {
         System.out.println("Test of PacketCaptureService methods");
         System.out.println("------------------------------");
 
-        File file = new File("src\\test\\java\\gharach_aw\\frame_analysis\\test.json");
+        File file = new File("src\\test\\java\\gharach_aw\\frame_analysis\\test2.json");
 
         PacketCapture packetCapture = packetCaptureProcessing.extractPropertiesPacketCapture(file);
         packetCaptureService.save(packetCapture);

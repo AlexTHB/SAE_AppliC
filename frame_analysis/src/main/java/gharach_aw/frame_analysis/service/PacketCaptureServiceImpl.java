@@ -1,6 +1,7 @@
 package gharach_aw.frame_analysis.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import gharach_aw.frame_analysis.persistence.data_access.PacketCaptureDAO;
 import gharach_aw.frame_analysis.persistence.data_access.PacketDAO;
 import gharach_aw.frame_analysis.persistence.entity.Packet;
 import gharach_aw.frame_analysis.persistence.entity.PacketCapture;
+import gharach_aw.frame_analysis.persistence.entity.PacketCaptureDTO;
+import gharach_aw.frame_analysis.persistence.entity.PacketDTO;
 
 /**
  * The {@code PacketCaptureService} class provides business logic for handling {@link PacketCapture} entities and 
@@ -44,6 +47,13 @@ public class PacketCaptureServiceImpl implements PacketCaptureService {
     }
 
     @Override
+    public List<PacketCaptureDTO> convertToPacketCaptureDTOList(List<PacketCapture> packetCaptures) {
+        return packetCaptures.stream()
+        .map(PacketCaptureDTO::convertToDTO)  // Use the existing convertToDTO method
+        .collect(Collectors.toList());
+    }
+
+    @Override
     public PacketCapture findById(Long id) {
         return packetCaptureDAO.findById(id);
     }
@@ -51,7 +61,7 @@ public class PacketCaptureServiceImpl implements PacketCaptureService {
     @Override
     public PacketCapture findByFileName(String fileName) {
         return packetCaptureDAO.findByFileName(fileName);
-    }
+    } 
 
     @Override
     public PacketCapture updatePacketCapture(PacketCapture updatedPacketCapture) {
@@ -76,6 +86,13 @@ public class PacketCaptureServiceImpl implements PacketCaptureService {
     @Override
     public List<Packet> findAllPacketsByCaptureName(String captureName) {
         return packetDAO.findAllPacketsByCaptureName(captureName);
+    }
+
+    @Override
+    public List<PacketDTO> convertToPacketDTOList(List<Packet> packets) {
+        return packets.stream()
+                .map(PacketDTO::convertToDTO)
+                .collect(Collectors.toList());
     }
 }
 

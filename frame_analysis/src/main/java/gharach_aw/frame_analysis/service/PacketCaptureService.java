@@ -5,12 +5,16 @@ import java.util.List;
 
 import gharach_aw.frame_analysis.persistence.entity.Packet;
 import gharach_aw.frame_analysis.persistence.entity.PacketCapture;
+import gharach_aw.frame_analysis.persistence.entity.PacketCaptureDTO;
+import gharach_aw.frame_analysis.persistence.entity.PacketDTO;
 
 public interface PacketCaptureService {
 
     void save(PacketCapture packetCapture);
 
     List<PacketCapture> findAllPacketCaptures();
+
+    List<PacketCaptureDTO> convertToPacketCaptureDTOList(List<PacketCapture> packetCaptures);
 
     PacketCapture findById(Long id);
 
@@ -25,4 +29,6 @@ public interface PacketCaptureService {
     List<Packet> findAllPacketsByCaptureId(Long captureId);
 
     List<Packet> findAllPacketsByCaptureName(String captureName);
+
+    List<PacketDTO> convertToPacketDTOList(List<Packet> packets);    
 }
