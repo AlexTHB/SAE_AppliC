@@ -26,12 +26,4 @@ public class PacketCaptureDTO {
     public String getFileDate() {
         return fileDate;
     }
-
-    public static PacketCaptureDTO convertToDTO(PacketCapture packetCapture) {
-        return new PacketCaptureDTO(
-            packetCapture.getId(),
-            packetCapture.getFileName(),
-            packetCapture.getFileDate()
-        );
-    }
 }

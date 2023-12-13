@@ -1,7 +1,8 @@
 package gharach_aw.frame_analysis.data_extractor;
 
-import java.io.File;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import gharach_aw.frame_analysis.persistence.entity.Packet;
 
@@ -18,5 +19,5 @@ public interface PacketProcessing {
      * @param file The file containing packet data.
      * @return A List of Packet objects extracted from the file.
      */
-    List<Packet> packetsExtract(File file);
+    List<Packet> packetsExtract(MultipartFile file);
 }

@@ -38,6 +38,8 @@ public class PacketCaptureDAO {
      * @param packetCapture The {@link PacketCapture} instance to be saved.
      */
     public void save(PacketCapture packetCapture) {
+        // Clear the persistence context before persisting
+        entityManager.clear();
         entityManager.persist(packetCapture);
     }
 
@@ -114,34 +116,6 @@ public class PacketCaptureDAO {
      */
     public PacketCapture updatePacketCapture(PacketCapture updatedEntity) {
         return entityManager.merge(updatedEntity);
-    }
-  
-    /**
-     * Updates the file name of a PacketCapture entity in the database.
-     *
-     * This method executes a JPQL (Java Persistence Query Language) update query to change
-     * the file name of a PacketCapture entity from the specified ancientName to the specified newName.
-     *
-     * @param ancientName The ancient file name to be updated.
-     * @param newName     The new file name to be set.
-     *
-     * @throws IllegalArgumentException If ancientName or newName is null.
-     * @throws PacketCaptureNotFoundException  If no PacketCapture entity with the specified ancientName is found.
-     */
-    public void updatePacketCaptureName(String ancientName, String newName) {
-        // Update the file name with JPQL
-        String updateQuery = "UPDATE PacketCapture pc SET pc.fileName = :newName WHERE pc.fileName = :ancientName";
-
-        // Execute the update query
-        int rowsAffected = entityManager.createQuery(updateQuery)
-            .setParameter("newName", newName)
-            .setParameter("ancientName", ancientName)
-            .executeUpdate();
-
-        // Check if any rows were affected
-        if (rowsAffected == 0) {
-            throw new PacketCaptureNotFoundException("No PacketCapture entity found with the specified ancientName: " + ancientName);
-        }
     }
 
     /**

@@ -12,7 +12,6 @@ import gharach_aw.frame_analysis.persistence.data_access.PacketDAO;
 import gharach_aw.frame_analysis.persistence.entity.Packet;
 import gharach_aw.frame_analysis.persistence.entity.PacketCapture;
 import gharach_aw.frame_analysis.persistence.entity.PacketCaptureDTO;
-import gharach_aw.frame_analysis.persistence.entity.PacketDTO;
 
 /**
  * The {@code PacketCaptureService} class provides business logic for handling {@link PacketCapture} entities and 
@@ -27,12 +26,9 @@ public class PacketCaptureServiceImpl implements PacketCaptureService {
 
     private final PacketCaptureDAO packetCaptureDAO;
 
-    private final PacketDAO packetDAO;
-
     @Autowired
-    public PacketCaptureServiceImpl(PacketCaptureDAO packetCaptureDAO, PacketDAO packetDAO) {
+    public PacketCaptureServiceImpl(PacketCaptureDAO packetCaptureDAO) {
         this.packetCaptureDAO = packetCaptureDAO;
-        this.packetDAO = packetDAO;
     }
 
     @Override
@@ -49,7 +45,7 @@ public class PacketCaptureServiceImpl implements PacketCaptureService {
     @Override
     public List<PacketCaptureDTO> convertToPacketCaptureDTOList(List<PacketCapture> packetCaptures) {
         return packetCaptures.stream()
-        .map(PacketCaptureDTO::convertToDTO)  // Use the existing convertToDTO method
+        .map(PacketCapture::convertToDTO)  // Use the existing convertToDTO method
         .collect(Collectors.toList());
     }
 
@@ -69,30 +65,7 @@ public class PacketCaptureServiceImpl implements PacketCaptureService {
     }
 
     @Override
-    public void updatePacketCaptureName(String ancientName, String newName) {
-        packetCaptureDAO.updatePacketCaptureName(ancientName, newName);
-    }
-
-    @Override
     public void deleteById(Long id) {
         packetCaptureDAO.deleteById(id);
     }
-
-    @Override
-    public List<Packet> findAllPacketsByCaptureId(Long captureId) {
-        return packetDAO.findAllPacketsByCaptureId(captureId);
-    }
-
-    @Override
-    public List<Packet> findAllPacketsByCaptureName(String captureName) {
-        return packetDAO.findAllPacketsByCaptureName(captureName);
-    }
-
-    @Override
-    public List<PacketDTO> convertToPacketDTOList(List<Packet> packets) {
-        return packets.stream()
-                .map(PacketDTO::convertToDTO)
-                .collect(Collectors.toList());
-    }
 }
-

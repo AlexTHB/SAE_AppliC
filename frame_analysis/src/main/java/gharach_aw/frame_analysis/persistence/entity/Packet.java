@@ -213,4 +213,22 @@ public class Packet {
             '}';
     }
 
+    public PacketDTO convertToDTO() {
+        return new PacketDTO(
+                this.getId(),
+                this.getPacketNum(),
+                this.getPacketDate(),
+                this.getDstMac(),
+                this.getSrcMac(),
+                this.getEtherType(),
+                this.getSrcIP(),
+                this.getDstIP(),
+                this.getSrcPort(),
+                this.getDstPort(),
+                this.getTransportProtocol(),
+                this.getApplicationProtocol(),
+                this.getSize(),
+                this.getPacketCapture().getId()
+        );
+    }
 }

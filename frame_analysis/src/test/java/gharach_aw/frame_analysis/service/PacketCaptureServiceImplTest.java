@@ -1,22 +1,20 @@
 package gharach_aw.frame_analysis.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
-import java.util.List;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import gharach_aw.frame_analysis.data_extractor.PacketCaptureProcessing;
 import gharach_aw.frame_analysis.exception.PacketCaptureNotFoundException;
-import gharach_aw.frame_analysis.persistence.entity.Packet;
 import gharach_aw.frame_analysis.persistence.entity.PacketCapture;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -28,7 +26,7 @@ import jakarta.transaction.Transactional;
 public class PacketCaptureServiceImplTest {
 
     @Autowired
-    private PacketCaptureProcessing packetCaptureProcessing;
+    private PacketCaptureProcessingService packetCaptureProcessingService;
 
     @Autowired
     private PacketCaptureService packetCaptureService;
@@ -37,48 +35,42 @@ public class PacketCaptureServiceImplTest {
     private EntityManager entityManager;
 
     @Test
-    public void testPacketCaptureServiceMethods() {
+    public void testPacketCaptureServiceMethods() throws Exception{
         
         System.out.println("------------------------------");
-        System.out.println("Test of PacketCaptureService methods");
+        System.out.println("Test of PacketService methods");
         System.out.println("------------------------------");
 
-        File file = new File("src\\test\\java\\gharach_aw\\frame_analysis\\test2.json");
+        // Path to your test JSON file
+        Path path = Paths.get("src/test/java/gharach_aw/frame_analysis/test.json");
+        
+        // Create a MockMultipartFile
+        MockMultipartFile mockMultipartFile = new MockMultipartFile(
+                "file",
+                "test.json",
+                "application/json",
+                Files.readAllBytes(path)
+        );
 
-        PacketCapture packetCapture = packetCaptureProcessing.extractPropertiesPacketCapture(file);
+        // Call the method with the MockMultipartFile
+        PacketCapture packetCapture = packetCaptureProcessingService.extractPropertiesPacketCapture(mockMultipartFile);
+
         packetCaptureService.save(packetCapture);
 
         assertNotNull(packetCapture.getId());
 
-        String updatedName = "NewCaptureName.json";
-        packetCaptureService.updatePacketCaptureName(packetCapture.getFileName(), updatedName);
-
         PacketCapture retrievedCapture = packetCaptureService.findById(packetCapture.getId());
 
-        // Expcitly refresh the entity from the database
-        entityManager.refresh(retrievedCapture);
-
-        assertEquals(updatedName, retrievedCapture.getFileName());
-
-        PacketCapture retrievedByName = packetCaptureService.findByFileName(updatedName);
-        assertEquals(updatedName, retrievedByName.getFileName());
+        PacketCapture retrievedByName = packetCaptureService.findByFileName(retrievedCapture.getFileName());
 
         assertTrue(packetCaptureService.findAllPacketCaptures().contains(packetCapture));
 
-        List<Packet> packets = packetCaptureService.findAllPacketsByCaptureId(packetCapture.getId());
-        assertNotNull(packets);
-
-        List<Packet> packetsByName = packetCaptureService.findAllPacketsByCaptureName(updatedName);
-        assertNotNull(packetsByName);
-
         packetCaptureService.deleteById(packetCapture.getId());
 
-       // Attempt to find the nonexistent PacketCapture and assert that PacketCaptureNotFoundException is thrown
+        // Attempt to find the nonexistent PacketCapture and assert that PacketCaptureNotFoundException is thrown
         PacketCaptureNotFoundException exception = assertThrows(PacketCaptureNotFoundException.class, () -> {
             packetCaptureService.findById(packetCapture.getId());
         });
-
-        assertTrue(packetCaptureService.findAllPacketsByCaptureId(packetCapture.getId()).isEmpty());
 
     }
 }

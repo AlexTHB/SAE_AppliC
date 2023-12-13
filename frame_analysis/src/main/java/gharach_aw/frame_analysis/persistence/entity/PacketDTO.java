@@ -15,6 +15,7 @@ public class PacketDTO {
     private final String transportProtocol;
     private final String applicationProtocol;
     private final int size;
+    private final Long packetCaptureId;
 
     // Constructor
 
@@ -31,7 +32,9 @@ public class PacketDTO {
             int dstPort,
             String transportProtocol,
             String applicationProtocol,
-            int size
+            int size,
+            Long packetCaptureId
+            
     ) {
         this.id = id;
         this.packetNum = packetNum;
@@ -46,6 +49,7 @@ public class PacketDTO {
         this.transportProtocol = transportProtocol;
         this.applicationProtocol = applicationProtocol;
         this.size = size;
+        this.packetCaptureId = packetCaptureId;
     }
 
 
@@ -103,26 +107,7 @@ public class PacketDTO {
         return size;
     }
 
-    public static PacketDTO convertToDTO(Packet packet) {
-        if (packet == null) {
-            return null;
-        }
-
-        return new PacketDTO(
-                packet.getId(),
-                packet.getPacketNum(),
-                packet.getPacketDate(),
-                packet.getDstMac(),
-                packet.getSrcMac(),
-                packet.getEtherType(),
-                packet.getSrcIP(),
-                packet.getDstIP(),
-                packet.getSrcPort(),
-                packet.getDstPort(),
-                packet.getTransportProtocol(),
-                packet.getApplicationProtocol(),
-                packet.getSize()
-        );
+    public Long getPacketCaptureId() {
+        return packetCaptureId;
     }
 }
-

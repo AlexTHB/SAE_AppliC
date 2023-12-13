@@ -36,7 +36,7 @@ public class PacketDAO {
      * @throws IllegalArgumentException if the captureId is null or empty.
      */
     public List<Packet> findAllPacketsByCaptureId(Long captureId) {
-        String jpql = "SELECT p FROM Packet p WHERE p.packetCapture.id = :captureId";
+        String jpql = "SELECT p FROM Packet p WHERE p.packetCapture.id = :captureId";        
         TypedQuery<Packet> query = entityManager.createQuery(jpql, Packet.class);
         query.setParameter("captureId", captureId);
         return query.getResultList();

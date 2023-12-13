@@ -1,7 +1,6 @@
 package gharach_aw.frame_analysis.data_extractor;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.ZonedDateTime;
@@ -14,6 +13,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,13 +66,13 @@ public class PacketProcessingJSON implements PacketProcessing{
      */
 
     @Override
-    public List<Packet> packetsExtract(File jsonfile) {
+    public List<Packet> packetsExtract(MultipartFile jsonfile) {
         try {
             // Create an ObjectMapper instance
             ObjectMapper objectMapper = new ObjectMapper();
 
-            // Get the '_source' object
-            JsonNode rootNode = objectMapper.readTree(jsonfile);
+            // Get the JSON content from MultipartFile
+            JsonNode rootNode = objectMapper.readTree(jsonfile.getInputStream());
 
             // Iterate through each element in the array
             for (JsonNode element : rootNode) {
