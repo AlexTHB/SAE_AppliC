@@ -6,12 +6,12 @@ import java.text.ParseException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
-
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -107,7 +107,8 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
         JsonNode frameNode = layersNode.path("frame");
         packetNum = frameNode.path("frame.number").asInt();
         packet.setPacketNum(packetNum);
-        packetDate = frameNode.path("frame.time").asText();
+        String dateString = frameNode.path("frame.time").asText();
+        packetDate = formatDate(dateString);
         packet.setPacketDate(packetDate);        
         size = frameNode.path("frame.len").asInt();
         packet.setSize(size);
@@ -206,5 +207,45 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
                 }
                 break;
         }
+    }
+
+    /**
+     * Formats the given date string to the desired format and time zone.
+     *
+     * @param dateString The date string to be formatted.
+     * @return The formatted date string.
+     * @throws ParseException If there is an error parsing date information.
+     */
+    public String formatDate(String dateString) throws ParseException {
+
+        String inputFormat = "MMM dd, yyyy HH:mm:ss.SSSSSSSSS zzzz";
+        String targetTimeZone = "Europe/Paris"; // CET (Central European Time)
+
+       
+        // Define a regular expression pattern to match the time zone
+        Pattern timeZonePattern = Pattern.compile("\\b[A-Za-z]+ [A-Za-z]+ Time\\b");
+
+        // Create a matcher for the input date string
+        Matcher matcher = timeZonePattern.matcher(dateString);
+
+        // Check if the time zone pattern is found
+        if (matcher.find()) {
+            // Extract the time zone from the matched pattern
+            String timeZone = matcher.group();
+
+            // Replace the timeZone with CET
+            packetDate = dateString.replace(timeZone, "CET");
+        } else {
+            System.out.println("Time zone not found in the input string.");
+        }
+
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern(inputFormat, Locale.ENGLISH);
+        ZonedDateTime zonedDateTime = ZonedDateTime
+        .parse(packetDate, inputFormatter.withZone(java.util.TimeZone.getTimeZone(targetTimeZone).toZoneId()));
+
+        // Format the ZonedDateTime object as needed
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        packetDate = outputFormatter.format(zonedDateTime);
+        return packetDate;
     }
 }
