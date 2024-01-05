@@ -36,7 +36,7 @@ public class PacketCaptureController {
     @Autowired
     private PacketProcessingService packetProcessingService;
 
-    @PostMapping("/PacketCapture/upload")
+    @PostMapping("packetCapture/upload")
     @ResponseBody
     public ResponseEntity<PacketCapture> savePacketCapture(@RequestParam("file") MultipartFile file) {
         PacketCapture packetCapture = packetCaptureProcessingService.extractPropertiesPacketCapture(file);
@@ -53,7 +53,7 @@ public class PacketCaptureController {
         return ResponseEntity.status(HttpStatus.CREATED).body(packetCapture);
     }
   
-    @GetMapping("/packet_captures")
+    @GetMapping("/packetCaptures")
     public ResponseEntity<List<PacketCapture>> getAllPacketCaptures() {
         List<PacketCapture> packetCaptures = packetCaptureService.findAllPacketCaptures();
 
@@ -65,13 +65,13 @@ public class PacketCaptureController {
         }
     }
 
-    @GetMapping("packet_capture/{id}")
+    @GetMapping("packetCapture/{id}")
     public ResponseEntity<Optional<PacketCapture>> getPacketCaptureById(@PathVariable Long id) {
         Optional<PacketCapture> packetCapture = packetCaptureService.findById(id);
         return ResponseEntity.ok(packetCapture);
     }
 
-    @DeleteMapping("/PacketCapture/{id}")
+    @DeleteMapping("/packetCapture/{id}")
     public ResponseEntity<String> deletePacketCaptureById(@PathVariable Long id) {
         packetCaptureService.deleteById(id);
         return ResponseEntity.ok("PacketCapture deleted successfully");
