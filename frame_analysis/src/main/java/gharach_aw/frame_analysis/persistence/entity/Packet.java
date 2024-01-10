@@ -54,11 +54,8 @@ public class Packet {
     @Column(name = "dstPort")    
     private int dstPort;
 
-    @Column(name = "transportProtocol")    
-    private String transportProtocol;
-
-    @Column(name = "applicationProtocol")    
-    private String applicationProtocol;
+    @Column(name = "protocol")    
+    private String protocol;
 
     @Column(name = "size")    
     private int size;
@@ -156,21 +153,12 @@ public class Packet {
         this.dstPort = dstPort;
     }
 
-    public String getTransportProtocol() {
-        return transportProtocol;
+    public String getProtocol() {
+        return protocol;
     }
 
-    public void setTransportProtocol(String transportProtocol) {
-        this.transportProtocol = transportProtocol;
-    }
-
-
-    public String getApplicationProtocol() {
-        return applicationProtocol;
-    }
-
-    public void setApplicationProtocol(String applicationProtocol) {
-        this.applicationProtocol = applicationProtocol;
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
     }
 
     public int getSize() {
@@ -217,8 +205,7 @@ public class Packet {
             ", dstIP='" + dstIP + '\'' +
             ", srcPort=" + srcPort +
             ", dstPort=" + dstPort +
-            ", transportProtocol='" + transportProtocol + '\'' +
-            ", applicationProtocol='" + applicationProtocol + '\'' +
+            ", protocol='" + protocol + '\'' +
             ", size=" + size +
             '}';
     }

@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +24,7 @@ import gharach_aw.frame_analysis.persistence.entity.Packet;
  * The {@code PacketProcessingJSON} class is an implementation of the {@link PacketProcessingService} interface.
  * It extracts informations of the JSON Packet Capture and populates {@code Packet} objects with relevant details.
  * 
- * This class is annotated with {@link Component} to be automatically detected and registered as a Spring bean.
+ * This class is annotated with {@link Service} Spring service component.
  */
 
 @Service
@@ -51,9 +50,7 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
 
     private int dstPort;
 
-    private String transportProtocol;
-
-    private String applicationProtocol;
+    private String protocol;
 
     private int size;
 
@@ -88,7 +85,7 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
                 ethernetLayerExtract(layersNode);
                 networkLayerExtract(layersNode);
                 transportLayerExtract(layersNode);
-                applicationLayerExtract(layersNode);
+                highestLayerProtocolExtract(layersNode);
                 packets.add(packet);
             }
         } catch (IOException | ParseException e) {
@@ -98,7 +95,7 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
     }
 
     /**
-     * Extracts information from the frame layer of the packet and sets relevant fields in the Packet object.
+     * Extracts information from the frame layer of the packet and sets packetNum, packetDate and packet size fields in the Packet object.
      *
      * @param layersNode The JsonNode representing the layers of the packet.
      * @throws ParseException If there is an error parsing date information.
@@ -115,22 +112,30 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
     }
 
     /**
-     * Extracts information from the Ethernet layer of the packet and sets relevant fields in the Packet object.
+     * Extracts information from the Ethernet layer of the packet and sets dstMac, srcMac and etherType fields in the Packet object.
      *
      * @param layersNode The JsonNode representing the layers of the packet.
      */ 
     public void ethernetLayerExtract(JsonNode layersNode) {
-        JsonNode ethNode = layersNode.path("eth");
-        dstMac = ethNode.path("eth.dst").asText();
-        packet.setDstMac(dstMac);
-        srcMac = ethNode.path("eth.src").asText();
-        packet.setSrcMac(srcMac);
-        etherType = ethNode.path("eth.type").asText();
-        packet.setEtherType(etherType);
+        if (layersNode.has("eth")) {
+            JsonNode ethNode = layersNode.path("eth");
+            dstMac = ethNode.path("eth.dst").asText();
+            packet.setDstMac(dstMac);
+            srcMac = ethNode.path("eth.src").asText();
+            packet.setSrcMac(srcMac);
+            etherType = ethNode.path("eth.type").asText();
+            packet.setEtherType(etherType);
+        } else {
+            JsonNode sllNode = layersNode.path("sll");
+            srcMac = sllNode.path("sll.src.eth").asText();
+            packet.setSrcMac(srcMac);
+            etherType = sllNode.path("sll.etype").asText();
+            packet.setEtherType(etherType);
+        } 
     }
 
     /**
-     * Extracts information from the network layer of the packet and sets relevant fields in the Packet object.
+     * Extracts information from the network layer of the packet and sets src and dst ip fields in the Packet object.
      *
      * @param layersNode The JsonNode representing the layers of the packet.
      */
@@ -150,29 +155,30 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
                 dstIP = ipv6Node.path("ipv6.dst").asText();
                 packet.setDstIP(dstIP);
                 break;
+            case "0x0806":
+                JsonNode arpNode = layersNode.path("arp");
+                srcIP = arpNode.path("arp.src.proto_ipv4").asText();
+                packet.setSrcIP(srcIP);
+                dstIP = arpNode.path("arp.dst.proto_ipv4").asText();
+                packet.setDstIP(dstIP);
+                break;
         }
     }
 
     /**
-     * Extracts information from the transport layer of the packet and sets relevant fields in the Packet object.
+     * Extracts information from the transport layer of the packet and sets ports src and dst fields in the Packet object.
      *
      * @param layersNode The JsonNode representing the layers of the packet.
      */
     public void transportLayerExtract(JsonNode layersNode) {   
         if (layersNode.has("tcp")) {
-            transportProtocol = "tcp";
-            packet.setTransportProtocol(transportProtocol);
-            JsonNode tcpNode = layersNode.path(transportProtocol);
+            JsonNode tcpNode = layersNode.path("tcp");
             srcPort = tcpNode.path("tcp.srcport").asInt();
             packet.setSrcPort(srcPort);
             dstPort = tcpNode.path("tcp.dstport").asInt();
             packet.setDstPort(dstPort);        
-        }
-
-        if (layersNode.has("udp")) {
-            transportProtocol = "udp";
-            packet.setTransportProtocol(transportProtocol);        
-            JsonNode udpNode = layersNode.path(transportProtocol);
+        } else {
+            JsonNode udpNode = layersNode.path("udp");
             srcPort = udpNode.path("udp.srcport").asInt();
             packet.setSrcPort(srcPort);
             dstPort = udpNode.path("udp.dstport").asInt();
@@ -181,11 +187,11 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
     }
 
     /**
-     * Extracts information from the application layer of the packet and sets relevant fields in the Packet object.
+     * Extracts the hightest layer protocol of packet and sets protocol field in the Packet object.
      *
      * @param layersNode The JsonNode representing the layers of the packet.
      */
-    public void applicationLayerExtract(JsonNode layersNode){
+    public void highestLayerProtocolExtract(JsonNode layersNode){
         // Get the size of the fields in the "layersNode"
         int size = layersNode.size();
         // Get an iterator for the fields in the "layersNode"
@@ -194,19 +200,10 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
         // Iterate through the fields to find the last one
         for (int i = 0; i < size; i++) {
             Map.Entry<String, JsonNode> fieldEntry = fieldsIterator.next();
-            applicationProtocol = fieldEntry.getKey();
+            protocol = fieldEntry.getKey();
         }
 
-        packet.setApplicationProtocol(applicationProtocol);
-
-        switch (applicationProtocol) {
-            case "tcp": 
-                if (srcPort == 443 || dstPort == 443) {
-                    applicationProtocol = "https";
-                    packet.setApplicationProtocol(applicationProtocol);
-                }
-                break;
-        }
+        packet.setProtocol(protocol);
     }
 
     /**
@@ -218,10 +215,6 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
      */
     public String formatDate(String dateString) throws ParseException {
 
-        String inputFormat = "MMM dd, yyyy HH:mm:ss.SSSSSSSSS zzzz";
-        String targetTimeZone = "Europe/Paris"; // CET (Central European Time)
-
-       
         // Define a regular expression pattern to match the time zone
         Pattern timeZonePattern = Pattern.compile("\\b[A-Za-z]+ [A-Za-z]+ Time\\b");
 
@@ -234,14 +227,15 @@ public class PacketProcessingServiceJSON implements PacketProcessingService{
             String timeZone = matcher.group();
 
             // Replace the timeZone with CET
-            packetDate = dateString.replace(timeZone, "CET");
-        } else {
-            System.out.println("Time zone not found in the input string.");
-        }
+            dateString = dateString.replace(timeZone, "CET");
+        } 
+
+        String inputFormat = "MMM dd, yyyy HH:mm:ss.SSSSSSSSS z";
+        String targetTimeZone = "Europe/Paris"; // CET (Central European Time)
 
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern(inputFormat, Locale.ENGLISH);
         ZonedDateTime zonedDateTime = ZonedDateTime
-        .parse(packetDate, inputFormatter.withZone(java.util.TimeZone.getTimeZone(targetTimeZone).toZoneId()));
+        .parse(dateString, inputFormatter.withZone(java.util.TimeZone.getTimeZone(targetTimeZone).toZoneId()));
 
         // Format the ZonedDateTime object as needed
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");

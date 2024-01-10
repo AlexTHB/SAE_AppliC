@@ -15,7 +15,7 @@ import gharach_aw.frame_analysis.persistence.repository.PacketRepository;
 /**
  * The {@code PacketCaptureService} class provides business logic for handling {@link PacketCapture} entities and 
  * {@link Packet} entities,
- * utilizing the data access methods defined in the associated {@link PacketCaptureDAO} and {@link PacketDAO}.
+ * utilizing the data access methods defined in the associated {@link PacketCaptureRepository} and {@link PacketRepository}.
  * 
  * This class is annotated with {@link Service} to indicate that it is a Spring service component.
  */
