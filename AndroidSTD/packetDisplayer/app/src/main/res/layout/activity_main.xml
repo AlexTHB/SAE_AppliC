@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:elevation="10dp"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="35px"
+            android:paddingTop="10px"
+            android:paddingBottom="10px"
+            android:minHeight="60dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                android:paddingVertical="17px"
+                android:letterSpacing="0.04"
+                android:text="@string/app_name" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/logo_white"-->
+<!--                android:contentDescription="TODO" />-->
+
+        </LinearLayout>
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingHorizontal="25px"-->
+<!--            android:paddingVertical="10px">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textFontWeight="600"-->
+<!--                android:paddingHorizontal="25px"-->
+<!--                android:text="3 Km - 4.5"-->
+<!--                android:textColor="@color/text"-->
+<!--                >-->
+<!--            </TextView>-->
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/ic_ant_design_star_filled"-->
+<!--                >-->
+<!--            </ImageView>-->
+<!--        </LinearLayout>-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Juices"-->
+<!--            android:textColor="@color/text"-->
+<!--            android:paddingHorizontal="50px"-->
+<!--            android:paddingBottom="10px"-->
+<!--            android:layout_marginTop="10px" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingHorizontal="20px"-->
+<!--            android:layout_marginHorizontal="50px"-->
+<!--            android:layout_marginVertical="20px"-->
+<!--            android:background="@drawable/rect">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="32px"-->
+<!--                android:text="Smoothies" />-->
+<!--        </LinearLayout>-->
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:textFontWeight="@integer/material_motion_duration_medium_2"
+        android:id="@+id/totaltItems"></TextView>
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="80"
+            android:divider="@android:color/transparent"
+            android:paddingTop="20dp"
+            android:paddingBottom="40dp"
+            android:dividerHeight="15dp"
+            android:clipToPadding="false"
+            >
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            >
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:text="back"
+                android:onClick="onBackButtonClick"
+                tools:ignore="UsingOnClickInXml" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nextButton"
+                android:onClick="onNextButtonClick"
+                tools:ignore="UsingOnClickInXml"
+                android:layout_marginHorizontal="20dp"
+                android:text="next" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
