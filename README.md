@@ -40,7 +40,7 @@ java -jar target/frame_analysis.jar
 
 (If you're always on the root of the folder)
 
-This run the API with embedded server tomcat (so not need to have a web server installed) on the port 8080 by default (You change can this in application.yml).  
+This run the API with embedded server tomcat (so not need to have a web server installed) on the port 8080 by default (You can change this in application.yml).  
 
 ## HTTP Request 
 
